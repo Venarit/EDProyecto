@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <unistd.h>//no funciona en replit
 #include <stdbool.h>
-//NEC
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+/////////////////////////////////////////////////////
 struct generos
 {
   int id_gen;
@@ -61,18 +63,6 @@ void impresion(struct elem_lista *inicio)
   }
 }
 
-void impresionde1(struct elem_lista *inicio)
-{
-  struct elem_lista *temp;
-  temp = inicio;
-  while (temp)
-  {
-    printf("$%d\n", temp->cancion.id_cancion);
-    printf("< %s >\n",temp -> cancion.can);
-    printf("- %s -\n",temp -> artista.art);
-    printf("\n");
-  }
-}
 
 
 //Funcion auxiliar para la creacion e insercion de elementos en una lista, util para la creacion de Colas, ya que //añade el elemento al final de la lista, recorriendola en dado caso hasta llegar al final
@@ -128,13 +118,12 @@ int insertarArtistas (struct elem_lista *inicio)
       insertarArtistas(inicio -> sig);
     }
 }
-//lista ligada o cola?^^^^
 
 int agregarACola(struct colaReproduccion *cola,struct elem_lista *lista, bool reproducir)
 {
   if (reproducir)
   {
-    //Aqui se tiene que limpiar la cola
+    //limpia cola
     cola -> sig = NULL;    
   }
     //Agregar a la estructura cola todo lo que hay en lista
@@ -164,7 +153,7 @@ int agregarCancionACola(struct colaReproduccion **cola,struct elem_lista *lista,
   int test;
     if (reproducir)
   {
-    //Aqui se tiene que limpiar la cola
+    //Limpia cola
     (*cola)-> sig = NULL;   
   }
     //Agregar a la estructura cola todo lo que hay en lista
@@ -195,20 +184,6 @@ int agregarCancionACola(struct colaReproduccion **cola,struct elem_lista *lista,
         }
       }
 }
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/* Funcion en deshuso, falta verificacion final, pero es candidata a eliminar :p
-int elementoACola(struct colaReproduccion **cola, struct canciones cancion)///un solo elemento a la cola
-{
-  int test;
-  printf("Banderita\n");
-  struct colaReproduccion *temp = calloc(1, sizeof(struct colaReproduccion));
-  temp->sig = *cola;
-  temp->cancion = cancion;
-  (*cola)->ant = temp;
-  printf("Se ha agregado la cancion ID %s", cancion.can);
-          scanf("%d", &test);
-}*/
 
 void estadoDeCola (struct colaReproduccion *inicioCola)
 {
@@ -227,37 +202,36 @@ void estadoDeCola (struct colaReproduccion *inicioCola)
 
 void cancionActual (struct colaReproduccion *inicioCola)
 {
+	int x;
+	
   struct colaReproduccion *temp;
   temp = inicioCola;
-  
-    printf("< %s >\n",temp -> cancion.can);
-    printf("- %s -\n",temp -> artista.art);
-    printf("\n");
-  int x;
-  scanf("%i",&x);
-}
-
-
-
-int progresoCancion(struct colaReproduccion *inicioCola)
-{
-  struct colaReproduccion *temp;
-  temp = inicioCola;
-
-  if(temp=NULL){
-    return 0;
-  }
-  
-  int progreso = 0;
-  while (progreso < 100)
+  while (temp)
   {
-    printf("-");
-    progreso++;
+  	int progress = 0;
+  	system("clear");
+    printf("------------Reproductor-------------\n");
+    printf("\n\t Actualmente sonando:\n\n");
+    printf("<\t %s\t >\n",temp -> cancion.can);
+    printf("\t- %s -\n",temp -> artista.art);
+    printf("\n");
+    while (progress < 100)
+  	{
+    printf("|");
+    progress++;
     usleep(temp->cancion.duracion*1000);
+ 	}
+    temp = temp -> sig;
   }
-  int x;
-  scanf("%i",&x);
+  	system("clear");
+    printf("------------Reproductor-------------\n");
+    printf("\n\t Actualmente sonando:\n\n");
+    printf("<\t NONE\t >\n");
+    printf("\t- NONE -\n");
+    printf("\n");
 }
+
+
 
 
 //Funcion auxiliar que deja completamente vacia y elimina todos los elementos de una lista
@@ -479,8 +453,9 @@ int main ()
           system("clear");
           printf("------------Reproductor-------------\n");
           printf("\nActualmente sonando:\n");
+          
           cancionActual(cola->sig);
-          progresoCancion(cola->sig);
+          
           printf("<   ||   >\n");
           printf("\nOpciones:\n");
           printf("p: Regresar al menu principal\n");
