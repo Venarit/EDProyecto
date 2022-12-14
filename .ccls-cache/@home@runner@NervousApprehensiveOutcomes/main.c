@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
-
+//NEC
 struct generos
 {
   int id_gen;
